@@ -71,3 +71,10 @@ def create_student():
         return redirect(url_for('index'))
     
     return render_template('create.html')
+
+@app.post('/students/<int:student_id>/delete/')
+def delete_student(student_id: int):
+    student = Student.query.get_or_404(student_id)
+    db.session.delete(student)
+    db.session.commit()
+    return redirect(url_for('index'))
