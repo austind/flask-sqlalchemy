@@ -32,3 +32,8 @@ class Student(db.Model):
 def index():
     students = Student.query.all()
     return render_template('index.html', students=students)
+
+@app.route('/students/<int:student_id>')
+def get_student(student_id: int):
+    student = Student.query.get_or_404(student_id)
+    return render_template('student.html', student=student)
