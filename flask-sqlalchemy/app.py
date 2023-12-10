@@ -37,3 +37,19 @@ def index():
 def get_student(student_id: int):
     student = Student.query.get_or_404(student_id)
     return render_template('student.html', student=student)
+
+@app.route('/students/create', methods=('GET', 'POST'))
+def create_student():
+    if request.method == 'POST':
+        student = Student(
+            firstname=request.form['firstname'],
+            lastname=request.form['lastname'],
+            email=request.form['email'],
+            age=int(request.form['age']),
+            bio=request.form['bio'],
+        )
+        db.session.add(student)
+        db.session.commit()
+        return redirect(url_for('index'))
+    
+    return render_template('create.html')
