@@ -38,6 +38,24 @@ def get_student(student_id: int):
     student = Student.query.get_or_404(student_id)
     return render_template('student.html', student=student)
 
+@app.route('/students/<int:student_id>/edit', methods=('GET', 'POST'))
+def edit_student(student_id: int):
+    student = Student.query.get_or_404(student_id)
+
+    if request.method == 'POST':
+        student.firstname = request.form['firstname']
+        student.lastname = request.form['lastname']
+        student.email = request.form['email']
+        student.age = int(request.form['age'])
+        student.bio = request.form['bio']
+
+        db.session.add(student)
+        db.session.commit()
+
+        return redirect(url_for('get_student', student_id=student_id))
+    
+    return render_template('edit.html', student=student)
+
 @app.route('/students/create', methods=('GET', 'POST'))
 def create_student():
     if request.method == 'POST':

@@ -17,6 +17,7 @@
                     <h4>Bio</h4>
                     <p>{{ student.bio }}</p>
                 </div>
+                <a href="{{ url_for('edit_student', student_id=student.id) }}">Edit</a>
             </div>
     </div>
 {% endblock %}
